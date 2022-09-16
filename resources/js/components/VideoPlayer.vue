@@ -66,8 +66,10 @@
       },
       skip(val){
         const media = this.$refs.player;
-
-        media.currentTime += val;
+        const destination = media.currentTime + val
+        if( 0 < destination && destination < media.duration){
+          media.currentTime += val;
+        }
       }
     }
   }
