@@ -26,37 +26,40 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    var media = this.$refs.player;
-
-    media.onloadeddata = function () {
-      console.log('hi');
-      var min = Math.floor(media.duration / 60);
-      var sec = Math.floor(media.duration - min * 60);
-      var minVal = min.toString().padStart(2, '0');
-      var secVal = sec.toString().padStart(2, '0');
-      var duration = "".concat(minVal, ":").concat(secVal);
-      _this.duration = duration;
-    };
-
-    media.addEventListener('timeupdate', function () {
-      var minutes = Math.floor(media.currentTime / 60);
-      var seconds = Math.floor(media.currentTime - minutes * 60);
-      var minuteValue = minutes.toString().padStart(2, '0');
-      var secondValue = seconds.toString().padStart(2, '0');
-      var mediaTime = "".concat(minuteValue, ":").concat(secondValue);
-      _this.current = mediaTime;
-      _this.percent = 100 * (media.currentTime / media.duration);
-    });
-
-    media.onended = function () {
-      _this.isPlaying = false;
-      _this.percent = 0;
-      _this.current = '00:00';
-    };
+    this.init();
   },
   methods: {
+    init: function init() {
+      var _this = this;
+
+      var media = this.$refs.player;
+
+      media.onloadeddata = function () {
+        console.log('hi');
+        var min = Math.floor(media.duration / 60);
+        var sec = Math.floor(media.duration - min * 60);
+        var minVal = min.toString().padStart(2, '0');
+        var secVal = sec.toString().padStart(2, '0');
+        var duration = "".concat(minVal, ":").concat(secVal);
+        _this.duration = duration;
+      };
+
+      media.addEventListener('timeupdate', function () {
+        var minutes = Math.floor(media.currentTime / 60);
+        var seconds = Math.floor(media.currentTime - minutes * 60);
+        var minuteValue = minutes.toString().padStart(2, '0');
+        var secondValue = seconds.toString().padStart(2, '0');
+        var mediaTime = "".concat(minuteValue, ":").concat(secondValue);
+        _this.current = mediaTime;
+        _this.percent = 100 * (media.currentTime / media.duration);
+      });
+
+      media.onended = function () {
+        _this.isPlaying = false;
+        _this.percent = 0;
+        _this.current = '00:00';
+      };
+    },
     togglePlayStop: function togglePlayStop() {
       var media = this.$refs.player;
       this.isPlaying = !this.isPlaying;
@@ -81,6 +84,16 @@ __webpack_require__.r(__webpack_exports__);
         media.currentTime += val;
       }
     }
+  },
+  watch: {
+    src: function src() {
+      var media = this.$refs.player;
+      media.src = this.src;
+      this.init();
+      this.isPlaying = false;
+      this.percent = 0;
+      this.current = '00:00';
+    }
   }
 });
 
@@ -97,12 +110,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_VideoPlayer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/VideoPlayer.vue */ "./resources/js/components/VideoPlayer.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'VideoExample',
@@ -116,6 +123,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         videos: []
       },
       videos: [],
+      src: '',
       videoOptions: {
         autoplay: true,
         controls: true,
@@ -123,35 +131,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: {
-    user: function user() {
-      return this.$store.state.auth.user;
-    }
-  },
+  computed: {},
   mounted: function mounted() {
     var _this = this;
 
     axios.get("/api/clients/".concat(this.$route.params.id)).then(function (res) {
       _this.client = res.data;
-      _this.videos = res.data.videos.map(function (i) {
+      var videos = res.data.videos.map(function (i) {
         return '/media/' + i['Location'];
       });
+      _this.videos = videos;
+      _this.src = videos[0];
     });
   },
-  updated: function updated() {// this.$refs['player-container'].click()
-  },
+  updated: function updated() {},
   methods: {
     playVideo: function playVideo(source) {
-      this.videoOptions = _objectSpread(_objectSpread({}, this.videoOptions), {}, {
-        sources: [source]
-      });
+      this.src = source;
     },
     getName: function getName(item) {
       var arr = item['Location'].split('/');
       return arr[arr.length - 1];
-    },
-    logout: function logout() {
-      this.$store.dispatch("auth/logout");
     }
   }
 });
@@ -358,7 +358,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button @click=\"logout\">Logout</Button> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [$data.videos.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_video_player, {
-    src: $data.videos[1]
+    src: $data.src
   }, null, 8
   /* PROPS */
   , ["src"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, _hoisted_9))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Avatar, {
@@ -377,7 +377,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onClick: function onClick($event) {
         return $options.playVideo(item);
       },
-      "class": "border-b py-1 flex hover:bg-blue-50"
+      "class": "border-b py-1 flex hover:bg-blue-50",
+      key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
       src: item,
       type: "video/mp4"
@@ -390,8 +391,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     )])], 8
     /* PROPS */
     , _hoisted_18);
-  }), 256
-  /* UNKEYED_FRAGMENT */
+  }), 128
+  /* KEYED_FRAGMENT */
   ))])])])])]);
 }
 

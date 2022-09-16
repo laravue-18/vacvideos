@@ -26,37 +26,40 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    var media = this.$refs.player;
-
-    media.onloadeddata = function () {
-      console.log('hi');
-      var min = Math.floor(media.duration / 60);
-      var sec = Math.floor(media.duration - min * 60);
-      var minVal = min.toString().padStart(2, '0');
-      var secVal = sec.toString().padStart(2, '0');
-      var duration = "".concat(minVal, ":").concat(secVal);
-      _this.duration = duration;
-    };
-
-    media.addEventListener('timeupdate', function () {
-      var minutes = Math.floor(media.currentTime / 60);
-      var seconds = Math.floor(media.currentTime - minutes * 60);
-      var minuteValue = minutes.toString().padStart(2, '0');
-      var secondValue = seconds.toString().padStart(2, '0');
-      var mediaTime = "".concat(minuteValue, ":").concat(secondValue);
-      _this.current = mediaTime;
-      _this.percent = 100 * (media.currentTime / media.duration);
-    });
-
-    media.onended = function () {
-      _this.isPlaying = false;
-      _this.percent = 0;
-      _this.current = '00:00';
-    };
+    this.init();
   },
   methods: {
+    init: function init() {
+      var _this = this;
+
+      var media = this.$refs.player;
+
+      media.onloadeddata = function () {
+        console.log('hi');
+        var min = Math.floor(media.duration / 60);
+        var sec = Math.floor(media.duration - min * 60);
+        var minVal = min.toString().padStart(2, '0');
+        var secVal = sec.toString().padStart(2, '0');
+        var duration = "".concat(minVal, ":").concat(secVal);
+        _this.duration = duration;
+      };
+
+      media.addEventListener('timeupdate', function () {
+        var minutes = Math.floor(media.currentTime / 60);
+        var seconds = Math.floor(media.currentTime - minutes * 60);
+        var minuteValue = minutes.toString().padStart(2, '0');
+        var secondValue = seconds.toString().padStart(2, '0');
+        var mediaTime = "".concat(minuteValue, ":").concat(secondValue);
+        _this.current = mediaTime;
+        _this.percent = 100 * (media.currentTime / media.duration);
+      });
+
+      media.onended = function () {
+        _this.isPlaying = false;
+        _this.percent = 0;
+        _this.current = '00:00';
+      };
+    },
     togglePlayStop: function togglePlayStop() {
       var media = this.$refs.player;
       this.isPlaying = !this.isPlaying;
@@ -80,6 +83,16 @@ __webpack_require__.r(__webpack_exports__);
       if (0 < destination && destination < media.duration) {
         media.currentTime += val;
       }
+    }
+  },
+  watch: {
+    src: function src() {
+      var media = this.$refs.player;
+      media.src = this.src;
+      this.init();
+      this.isPlaying = false;
+      this.percent = 0;
+      this.current = '00:00';
     }
   }
 });

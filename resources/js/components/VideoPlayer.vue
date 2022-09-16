@@ -44,39 +44,42 @@
       }
     },
     mounted() {
-      const media = this.$refs.player
-      media.onloadeddata = () =>{
-        console.log('hi')
-        const min = Math.floor(media.duration / 60);
-        const sec = Math.floor(media.duration - min * 60);
-
-        const minVal = min.toString().padStart(2, '0');
-        const secVal = sec.toString().padStart(2, '0');
-
-        const duration = `${minVal}:${secVal}`;
-        this.duration = duration;
-      };
-
-      media.addEventListener('timeupdate', () =>{
-        const minutes = Math.floor(media.currentTime / 60);
-        const seconds = Math.floor(media.currentTime - minutes * 60);
-
-        const minuteValue = minutes.toString().padStart(2, '0');
-        const secondValue = seconds.toString().padStart(2, '0');
-
-        const mediaTime = `${minuteValue}:${secondValue}`;
-        this.current = mediaTime;
-
-        this.percent = 100 * (media.currentTime/media.duration);
-      });
-      
-      media.onended = () => {
-        this.isPlaying = false
-        this.percent = 0
-        this.current = '00:00'
-      }
+      this.init()
     },
     methods: {
+      init(){
+        const media = this.$refs.player
+        media.onloadeddata = () =>{
+          console.log('hi')
+          const min = Math.floor(media.duration / 60);
+          const sec = Math.floor(media.duration - min * 60);
+
+          const minVal = min.toString().padStart(2, '0');
+          const secVal = sec.toString().padStart(2, '0');
+
+          const duration = `${minVal}:${secVal}`;
+          this.duration = duration;
+        };
+
+        media.addEventListener('timeupdate', () =>{
+          const minutes = Math.floor(media.currentTime / 60);
+          const seconds = Math.floor(media.currentTime - minutes * 60);
+
+          const minuteValue = minutes.toString().padStart(2, '0');
+          const secondValue = seconds.toString().padStart(2, '0');
+
+          const mediaTime = `${minuteValue}:${secondValue}`;
+          this.current = mediaTime;
+
+          this.percent = 100 * (media.currentTime/media.duration);
+        });
+        
+        media.onended = () => {
+          this.isPlaying = false
+          this.percent = 0
+          this.current = '00:00'
+        }
+      },
       togglePlayStop(){
         let media = this.$refs.player
         this.isPlaying = !this.isPlaying
@@ -98,6 +101,16 @@
         if( 0 < destination && destination < media.duration){
           media.currentTime += val;
         }
+      }
+    },
+    watch: {
+      src(){
+        let media = this.$refs.player
+        media.src = this.src
+        this.init()
+        this.isPlaying = false
+        this.percent = 0
+        this.current = '00:00'
       }
     }
   }

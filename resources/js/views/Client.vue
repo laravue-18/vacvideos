@@ -11,7 +11,7 @@
     <div class="flex container m-auto pt-8">
       <div class="flex-1">
         <div v-if="videos.length">
-          <video-player  :src="videos[1]"/>
+          <video-player  :src="src"/>
         </div>
         <div v-else class="flex justify-center items-center border bg-black" style="height: 500px;">
           <h5 class="text-gray-100 text-2xl font-bold">There is no video.</h5>
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="border-t">
-            <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50">
+            <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50" :key="index">
               <div class="w-36">
                 <video>
                   <source :src="item" type="video/mp4">
@@ -64,6 +64,7 @@ export default {
         videos: []
       },
       videos: [],
+      src: '',
       videoOptions: {
         autoplay: true,
         controls: true,
@@ -72,33 +73,25 @@ export default {
     };
   },
   computed: {
-    user(){
-      return this.$store.state.auth.user
-    }
   },
 
   mounted(){
       axios.get(`/api/clients/${this.$route.params.id}`).then(res => {
         this.client = res.data
-        this.videos = res.data.videos.map(i => '/media/' + i['Location'])
+        const videos = res.data.videos.map(i => '/media/' + i['Location'])
+        this.videos = videos
+        this.src = videos[0]
       })
     },
     updated(){
-      // this.$refs['player-container'].click()
     },
     methods: {
       playVideo(source){
-        this.videoOptions = {
-          ...this.videoOptions,
-          sources: [source],
-        }
+        this.src = source
       },
       getName(item){
         let arr = item['Location'].split('/')
         return arr[arr.length - 1]
-      },
-      logout() {
-        this.$store.dispatch("auth/logout");
       },
     }
 };
