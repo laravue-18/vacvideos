@@ -23,13 +23,7 @@ __webpack_require__.r(__webpack_exports__);
       skipStep: 5
     };
   },
-  mounted: function mounted() {
-    var media = document.querySelector('video');
-    var fwd = document.querySelector('.fwd');
-    fwd.addEventListener('click', function () {
-      media.currentTime += 3;
-    });
-  },
+  mounted: function mounted() {},
   updated: function updated() {// this.player.src(this.options.sources[0]);
     // if(this.options.autoplay){
     //   this.$refs.videoPlayer.focus()
@@ -58,7 +52,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     skip: function skip(val) {
-      var media = document.querySelector('video');
+      var media = this.$refs.player;
 
       if (media.currentTime >= media.duration - 3) {} else {
         media.currentTime += val;
@@ -164,7 +158,6 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = {
   ref: "player",
-  id: "player",
   "class": "w-full",
   tabindex: "-1"
 };

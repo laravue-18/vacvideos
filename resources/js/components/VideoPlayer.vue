@@ -1,6 +1,6 @@
 <template>
     <div class="player">
-      <video ref='player' id='player' class="w-full" tabindex="-1">
+      <video ref='player' class="w-full" tabindex="-1">
         <source :src="src" type="video/mp4" />
         <!-- fallback content here -->
       </video>
@@ -35,11 +35,7 @@
       }
     },
     mounted() {
-      const media = document.querySelector('video')
-      const fwd = document.querySelector('.fwd')
-      fwd.addEventListener('click', () => {
-        media.currentTime += 3
-      })
+      
     },
     updated(){
       // this.player.src(this.options.sources[0]);
@@ -69,7 +65,7 @@
         }
       },
       skip(val){
-        const media = document.querySelector('video');
+        const media = this.$refs.player;
 
         if (media.currentTime >= media.duration - 3) {
         } else {
