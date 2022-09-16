@@ -11,7 +11,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// import videojs from 'video.js';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'VideoPlayer',
   props: ['src'],
@@ -20,19 +19,42 @@ __webpack_require__.r(__webpack_exports__);
       player: {},
       isPlaying: false,
       isFullscreen: false,
-      step: 3
+      step: 3,
+      percent: 0,
+      current: '00:00',
+      duration: '00:00'
     };
   },
-  mounted: function mounted() {},
-  updated: function updated() {// this.player.src(this.options.sources[0]);
-    // if(this.options.autoplay){
-    //   this.$refs.videoPlayer.focus()
-    // }
-  },
-  beforeDestroy: function beforeDestroy() {
-    if (this.player) {
-      this.player.dispose();
-    }
+  mounted: function mounted() {
+    var _this = this;
+
+    var media = this.$refs.player;
+
+    media.onloadeddata = function () {
+      console.log('hi');
+      var min = Math.floor(media.duration / 60);
+      var sec = Math.floor(media.duration - min * 60);
+      var minVal = min.toString().padStart(2, '0');
+      var secVal = sec.toString().padStart(2, '0');
+      var duration = "".concat(minVal, ":").concat(secVal);
+      _this.duration = duration;
+    };
+
+    media.addEventListener('timeupdate', function () {
+      var minutes = Math.floor(media.currentTime / 60);
+      var seconds = Math.floor(media.currentTime - minutes * 60);
+      var minuteValue = minutes.toString().padStart(2, '0');
+      var secondValue = seconds.toString().padStart(2, '0');
+      var mediaTime = "".concat(minuteValue, ":").concat(secondValue);
+      _this.current = mediaTime;
+      _this.percent = 100 * (media.currentTime / media.duration);
+    });
+
+    media.onended = function () {
+      _this.isPlaying = false;
+      _this.percent = 0;
+      _this.current = '00:00';
+    };
   },
   methods: {
     togglePlayStop: function togglePlayStop() {
@@ -160,8 +182,21 @@ var _hoisted_3 = ["src"];
 var _hoisted_4 = {
   "class": "controls flex justify-between items-center px-2"
 };
+var _hoisted_5 = {
+  "class": "flex-1 text-white px-3 flex justify-between items-center"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " / ", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = {
+  "class": "flex-1 px-4"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
+
+  var _component_Slider = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Slider");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
     src: $props.src,
@@ -196,7 +231,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     size: "small",
     icon: "md-skip-forward",
     ghost: ""
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.current), 1
+  /* TEXT */
+  ), _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.duration), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
+    modelValue: $data.percent,
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.percent = $event;
+    }),
+    step: "0.1"
+  }, null, 8
+  /* PROPS */
+  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onClick: $options.toggleFullscreen,
     "class": "mr-2",
