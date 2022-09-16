@@ -1,45 +1,53 @@
 <template>
-    <div class="w-full">
-        <video ref="videoPlayer" class="video-js vjs-default-skin vjs-16-9" 
-            @keyup.right="skip(+skipStep)" 
-            @keyup.left="skip(-skipStep)"
-        ></video>
+    <div class="player">
+      <video ref='player' id='player' class="w-full" tabindex="-1">
+        <source :src="src" type="video/mp4" />
+        <!-- fallback content here -->
+      </video>
+      <div class="controls flex justify-between items-center px-2">
+        <div>
+          <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
+          <Button type='text' @click="skip(-skipStep)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
+          <Button type='text' class='fwd' size="small" icon="md-skip-forward" ghost></Button>
+        </div>
+        <div class="timer">
+          <div></div>
+          <span aria-label="timer">00:00</span>
+        </div>
+        <Icon type="md-skip-backward" />
+        <Icon type="md-skip-forward" />
+      </div>
     </div>
-  </template>
+
+</template>
   
-  <script>
-  import videojs from 'video.js';
+<script>
+  // import videojs from 'video.js';
+
+  
   
   export default {
     name: 'VideoPlayer',
-    props: {
-      options: {
-        type: Object,
-        default() {
-          return {};
-        }
-      },
-    },
+    props: ['src'],
     data() {
       return {
-        player: null,
+        player: {},
+        isPlaying: false,
         skipStep: 10
       }
     },
     mounted() {
-      this.player = videojs(this.$refs.videoPlayer, this.options, () => {
-        this.player.log('onPlayerReady', this);
+      const media = document.querySelector('video')
+      const fwd = document.querySelector('.fwd')
+      fwd.addEventListener('click', () => {
+        media.currentTime += 3
       })
-      if(this.options.autoplay){
-        this.$refs.videoPlayer.focus()
-      }
-      
     },
     updated(){
-      this.player.src(this.options.sources[0]);
-      if(this.options.autoplay){
-        this.$refs.videoPlayer.focus()
-      }
+      // this.player.src(this.options.sources[0]);
+      // if(this.options.autoplay){
+      //   this.$refs.videoPlayer.focus()
+      // }
     },
     beforeDestroy() {
       if (this.player) {
@@ -47,9 +55,42 @@
       }
     },
     methods: {
-        skip(val){
-            this.$refs.videoPlayer.currentTime += val
+      togglePlayStop(){
+        let media = this.$refs.player
+        this.isPlaying = !this.isPlaying
+        media.paused ? media.play() : media.pause()
+      },
+      skip(val){
+        const media = document.querySelector('video');
+
+        if (media.currentTime >= media.duration - 3) {
+        } else {
+          media.currentTime += 3;
         }
+      }
     }
   }
-  </script>
+</script>
+
+<style>
+.player{
+  position: relative;
+}
+.controls {
+  /* visibility: hidden; */
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3em;
+  background-color: rgba(43,51,63,.7);
+  display: flex;
+}
+
+.player:hover .controls,
+.player:focus-within .controls {
+  opacity: 1;
+}
+
+</style>

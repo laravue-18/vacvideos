@@ -11,7 +11,7 @@
     <div class="flex container m-auto pt-8">
       <div class="flex-1">
         <div v-if="videos.length">
-          <video-player  :options="videoOptions"/>
+          <video-player  :src="videos[1]"/>
         </div>
         <div v-else class="flex justify-center items-center border bg-black" style="height: 500px;">
           <h5 class="text-gray-100 text-2xl font-bold">There is no video.</h5>
@@ -32,11 +32,13 @@
           <div class="border-t">
             <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50">
               <div class="w-36">
-                <video-player  :options="{sources: item}"/>
+                <video>
+                  <source :src="item" type="video/mp4">
+                </video>
               </div>
               <div class="py-2 pl-4">
                 <p>Video {{index}}</p>
-                <p>{{getName(item)}}</p>
+                <!-- <p>{{getName(item)}}</p> -->
                 <p>{{item['Timestamp']}}</p>
               </div>
             </div>
@@ -78,16 +80,7 @@ export default {
   mounted(){
       axios.get(`/api/clients/${this.$route.params.id}`).then(res => {
         this.client = res.data
-        let sources = res.data.videos.map(i => {
-          i.src = '/media/' + i['Location']
-          i.type = 'video/mp4'
-          return i
-        })
-        this.videos = sources
-        this.videoOptions = {
-          ...(this.videoOptions),
-          sources: sources[0]
-        }
+        this.videos = res.data.videos.map(i => '/media/' + i['Location'])
       })
     },
     updated(){
