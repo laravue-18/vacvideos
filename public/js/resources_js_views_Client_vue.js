@@ -83,6 +83,10 @@ __webpack_require__.r(__webpack_exports__);
       if (0 < destination && destination < media.duration) {
         media.currentTime += val;
       }
+    },
+    changeTime: function changeTime(percent) {
+      var media = this.$refs.player;
+      media.currentTime = Math.floor(media.duration * percent / 100);
     }
   },
   watch: {
@@ -240,10 +244,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.percent = $event;
     }),
-    step: "0.1"
+    step: 0.1,
+    onOnChange: $options.changeTime
   }, null, 8
   /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["modelValue", "step", "onOnChange"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onClick: $options.toggleFullscreen,
     "class": "mr-2",

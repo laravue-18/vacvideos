@@ -17,7 +17,7 @@
             <span>{{duration}}</span>
           </div>
           <div class='flex-1 px-4'>
-            <Slider v-model="percent" step="0.1"></Slider>
+            <Slider v-model="percent" :step="0.1" @on-change="changeTime"></Slider>
           </div>
         </div>
         <div>
@@ -101,6 +101,10 @@
         if( 0 < destination && destination < media.duration){
           media.currentTime += val;
         }
+      },
+      changeTime(percent){
+        const media = this.$refs.player
+        media.currentTime = Math.floor(media.duration * percent / 100)
       }
     },
     watch: {
