@@ -8,14 +8,11 @@
         <div>
           <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
           <Button type='text' @click="skip(-skipStep)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
-          <Button type='text' class='fwd' size="small" icon="md-skip-forward" ghost></Button>
+          <Button type='text' @click="skip(skipStep)" size="small" icon="md-skip-forward" ghost></Button>
         </div>
-        <div class="timer">
-          <div></div>
-          <span aria-label="timer">00:00</span>
+        <div>
+          <Button type='text' @click="toggleFullscreen" class='mr-2' size="small" :icon=" isFullscreen ? 'md-contract' : 'md-expand'" ghost></Button>
         </div>
-        <Icon type="md-skip-backward" />
-        <Icon type="md-skip-forward" />
       </div>
     </div>
 
@@ -33,7 +30,8 @@
       return {
         player: {},
         isPlaying: false,
-        skipStep: 10
+        isFullscreen: false,
+        skipStep: 5
       }
     },
     mounted() {
@@ -60,12 +58,22 @@
         this.isPlaying = !this.isPlaying
         media.paused ? media.play() : media.pause()
       },
+      toggleFullscreen(){
+        const mediaContainer = document.querySelector('.player')
+        if (!document.fullscreenElement) {
+          mediaContainer.requestFullscreen();
+          this.isFullscreen = true
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen();
+          this.isFullscreen = false
+        }
+      },
       skip(val){
         const media = document.querySelector('video');
 
         if (media.currentTime >= media.duration - 3) {
         } else {
-          media.currentTime += 3;
+          media.currentTime += val;
         }
       }
     }

@@ -19,7 +19,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       player: {},
       isPlaying: false,
-      skipStep: 10
+      isFullscreen: false,
+      skipStep: 5
     };
   },
   mounted: function mounted() {
@@ -45,11 +46,22 @@ __webpack_require__.r(__webpack_exports__);
       this.isPlaying = !this.isPlaying;
       media.paused ? media.play() : media.pause();
     },
+    toggleFullscreen: function toggleFullscreen() {
+      var mediaContainer = document.querySelector('.player');
+
+      if (!document.fullscreenElement) {
+        mediaContainer.requestFullscreen();
+        this.isFullscreen = true;
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+        this.isFullscreen = false;
+      }
+    },
     skip: function skip(val) {
       var media = document.querySelector('video');
 
       if (media.currentTime >= media.duration - 3) {} else {
-        media.currentTime += 3;
+        media.currentTime += val;
       }
     }
   }
@@ -154,19 +166,8 @@ var _hoisted_3 = ["src"];
 var _hoisted_4 = {
   "class": "controls flex justify-between items-center px-2"
 };
-
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "timer"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "aria-label": "timer"
-}, "00:00")], -1
-/* HOISTED */
-);
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
-  var _component_Icon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Icon");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
     src: $props.src,
@@ -195,15 +196,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    "class": "fwd",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.skip($data.skipStep);
+    }),
     size: "small",
     icon: "md-skip-forward",
     ghost: ""
-  })]), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Icon, {
-    type: "md-skip-backward"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Icon, {
-    type: "md-skip-forward"
-  })])]);
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+    type: "text",
+    onClick: $options.toggleFullscreen,
+    "class": "mr-2",
+    size: "small",
+    icon: $data.isFullscreen ? 'md-contract' : 'md-expand',
+    ghost: ""
+  }, null, 8
+  /* PROPS */
+  , ["onClick", "icon"])])])]);
 }
 
 /***/ }),
