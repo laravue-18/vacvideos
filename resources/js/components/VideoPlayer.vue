@@ -7,8 +7,8 @@
       <div class="controls flex justify-between items-center px-2">
         <div>
           <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
-          <Button type='text' @click="skip(-skipStep)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
-          <Button type='text' @click="skip(skipStep)" size="small" icon="md-skip-forward" ghost></Button>
+          <Button type='text' @click="skip(-step)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
+          <Button type='text' @click="skip(step)" size="small" icon="md-skip-forward" ghost></Button>
         </div>
         <div>
           <Button type='text' @click="toggleFullscreen" class='mr-2' size="small" :icon=" isFullscreen ? 'md-contract' : 'md-expand'" ghost></Button>
@@ -31,7 +31,7 @@
         player: {},
         isPlaying: false,
         isFullscreen: false,
-        skipStep: 5
+        step: 3
       }
     },
     mounted() {
@@ -67,10 +67,7 @@
       skip(val){
         const media = this.$refs.player;
 
-        if (media.currentTime >= media.duration - 3) {
-        } else {
-          media.currentTime += val;
-        }
+        media.currentTime += val;
       }
     }
   }

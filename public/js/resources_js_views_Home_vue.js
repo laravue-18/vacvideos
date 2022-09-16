@@ -20,7 +20,7 @@ __webpack_require__.r(__webpack_exports__);
       player: {},
       isPlaying: false,
       isFullscreen: false,
-      skipStep: 5
+      step: 3
     };
   },
   mounted: function mounted() {},
@@ -53,10 +53,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     skip: function skip(val) {
       var media = this.$refs.player;
-
-      if (media.currentTime >= media.duration - 3) {} else {
-        media.currentTime += val;
-      }
+      media.currentTime += val;
     }
   }
 });
@@ -187,7 +184,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["onClick", "icon"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $options.skip(-$data.skipStep);
+      return $options.skip(-$data.step);
     }),
     "class": "mr-2",
     size: "small",
@@ -196,7 +193,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onClick: _cache[1] || (_cache[1] = function ($event) {
-      return $options.skip($data.skipStep);
+      return $options.skip($data.step);
     }),
     size: "small",
     icon: "md-skip-forward",
