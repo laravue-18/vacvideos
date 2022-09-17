@@ -9,17 +9,17 @@
         <div class="flex justify-between items-center">
           <div>
             <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
-            <Button type='text' @click="skip(-step)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
-            <Button type='text' @click="skip(step)" class='mr-2' size="small" icon="md-skip-forward" ghost></Button>
-            <Dropdown placement='top'>
+            <Button type='text' @click="skip(false)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
+            <Button type='text' @click="skip(true)" class='mr-2' size="small" icon="md-skip-forward" ghost></Button>
+            <Dropdown placement='top' :events-enabled="true" @on-click="setStep">
                 <Button type='text' size="small" icon="md-menu" ghost></Button>
                 <template #list>
-                    <DropdownMenu @on-click="setStep">
-                        <DropdownItem :class="'bg-gray-200'" :name="15">15</DropdownItem>
-                        <DropdownItem :class="'bg-gray-200'" :name="10">10</DropdownItem>
-                        <DropdownItem :class="'bg-gray-200'" :name="5">5</DropdownItem>
-                        <DropdownItem :class="'bg-gray-200'" :name="3">3</DropdownItem>
-                        <DropdownItem :class="'bg-gray-200'" :name="1">1</DropdownItem>
+                    <DropdownMenu>
+                        <DropdownItem :name="15">15</DropdownItem>
+                        <DropdownItem :name="10">10</DropdownItem>
+                        <DropdownItem :name="5">5</DropdownItem>
+                        <DropdownItem :name="3">3</DropdownItem>
+                        <DropdownItem :name="1">1</DropdownItem>
                     </DropdownMenu>
                 </template>
             </Dropdown>
@@ -105,11 +105,12 @@
           this.isFullscreen = false
         }
       },
-      skip(val){
+      skip(flag){
         const media = this.$refs.player;
-        const destination = media.currentTime + val
+        const step = flag ? this.step : -this.step
+        const destination = media.currentTime + step
         if( 0 < destination && destination < media.duration){
-          media.currentTime += val;
+          media.currentTime = destination;
         }
       },
       changeTime(percent){
