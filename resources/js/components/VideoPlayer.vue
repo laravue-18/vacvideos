@@ -7,11 +7,11 @@
       <div class="controls p-2 pt-0">
         <Slider v-model="percent" :step="0.1" @on-change="changeTime"></Slider>
         <div class="flex justify-between items-center">
-          <div>
+          <div class='flex items-center'>
             <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
             <Button type='text' @click="skip(false)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
             <Button type='text' @click="skip(true)" class='mr-2' size="small" icon="md-skip-forward" ghost></Button>
-            <Dropdown placement='top' :events-enabled="true" @on-click="setStep">
+            <Dropdown placement='top' :events-enabled="true" @on-click="setStep" class="mr-2">
                 <Button type='text' size="small" icon="md-menu" ghost></Button>
                 <template #list>
                     <DropdownMenu>
@@ -23,6 +23,10 @@
                     </DropdownMenu>
                 </template>
             </Dropdown>
+            <Button type='text' @click="skip(true)" class='mr-2' size="small" icon="md-volume-up" ghost></Button>
+            <div style='width: 100px;'>
+              <Slider v-model="volume" @on-change="changeVol"></Slider>
+            </div>
           </div>
           <div class='text-white'>
             <span>{{current}}</span>
@@ -50,7 +54,8 @@
         step: 3,
         percent: 0,
         current: '00:00',
-        duration: '00:00'
+        duration: '00:00',
+        volume: 100,
       }
     },
     mounted() {
@@ -119,6 +124,10 @@
       },
       setStep(val){
         this.step = val
+      },
+      changeVol(){
+        const media = this.$refs.player
+        media.volume = this.volume / 100;
       }
     },
     watch: {
