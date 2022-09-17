@@ -4,24 +4,34 @@
         <source :src="src" type="video/mp4" />
         <!-- fallback content here -->
       </video>
-      <div class="controls flex justify-between items-center px-2">
-        <div>
-          <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
-          <Button type='text' @click="skip(-step)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
-          <Button type='text' @click="skip(step)" size="small" icon="md-skip-forward" ghost></Button>
-        </div>
-        <div class="flex-1 text-white px-3 flex justify-between items-center">
+      <div class="controls p-2 pt-0">
+        <Slider v-model="percent" :step="0.1" @on-change="changeTime"></Slider>
+        <div class="flex justify-between items-center">
           <div>
+            <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
+            <Button type='text' @click="skip(-step)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
+            <Button type='text' @click="skip(step)" class='mr-2' size="small" icon="md-skip-forward" ghost></Button>
+            <Dropdown placement='top'>
+                <Button type='text' size="small" icon="md-menu" ghost></Button>
+                <template #list>
+                    <DropdownMenu @on-click="setStep">
+                        <DropdownItem :class="'bg-gray-200'" :name="15">15</DropdownItem>
+                        <DropdownItem :class="'bg-gray-200'" :name="10">10</DropdownItem>
+                        <DropdownItem :class="'bg-gray-200'" :name="5">5</DropdownItem>
+                        <DropdownItem :class="'bg-gray-200'" :name="3">3</DropdownItem>
+                        <DropdownItem :class="'bg-gray-200'" :name="1">1</DropdownItem>
+                    </DropdownMenu>
+                </template>
+            </Dropdown>
+          </div>
+          <div class='text-white'>
             <span>{{current}}</span>
             <span> / </span>
             <span>{{duration}}</span>
           </div>
-          <div class='flex-1 px-4'>
-            <Slider v-model="percent" :step="0.1" @on-change="changeTime"></Slider>
+          <div>
+            <Button type='text' @click="toggleFullscreen" size="small" :icon=" isFullscreen ? 'md-contract' : 'md-expand'" ghost></Button>
           </div>
-        </div>
-        <div>
-          <Button type='text' @click="toggleFullscreen" class='mr-2' size="small" :icon=" isFullscreen ? 'md-contract' : 'md-expand'" ghost></Button>
         </div>
       </div>
     </div>
@@ -105,6 +115,9 @@
       changeTime(percent){
         const media = this.$refs.player
         media.currentTime = Math.floor(media.duration * percent / 100)
+      },
+      setStep(val){
+        this.step = val
       }
     },
     watch: {
@@ -131,9 +144,8 @@
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 3em;
-  background-color: rgba(43,51,63,.7);
-  display: flex;
+  /* height: 3em; */
+  background-color: rgba(43,51,63,.4);
 }
 
 .player:hover .controls,
@@ -141,4 +153,11 @@
   opacity: 1;
 }
 
+.ivu-dropdown-menu {
+    min-width: 40px;
+}
+.ivu-dropdown-item{
+   text-align: center;
+   padding: 5px;
+}
 </style>

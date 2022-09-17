@@ -87,6 +87,9 @@ __webpack_require__.r(__webpack_exports__);
     changeTime: function changeTime(percent) {
       var media = this.$refs.player;
       media.currentTime = Math.floor(media.duration * percent / 100);
+    },
+    setStep: function setStep(val) {
+      this.step = val;
     }
   },
   watch: {
@@ -203,23 +206,40 @@ var _hoisted_2 = {
 };
 var _hoisted_3 = ["src"];
 var _hoisted_4 = {
-  "class": "controls flex justify-between items-center px-2"
+  "class": "controls p-2 pt-0"
 };
 var _hoisted_5 = {
-  "class": "flex-1 text-white px-3 flex justify-between items-center"
+  "class": "flex justify-between items-center"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " / ", -1
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("15");
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("10");
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("5");
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("3");
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("1");
+
+var _hoisted_11 = {
+  "class": "text-white"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " / ", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = {
-  "class": "flex-1 px-4"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_Slider = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Slider");
+
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
-  var _component_Slider = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Slider");
+  var _component_DropdownItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DropdownItem");
+
+  var _component_DropdownMenu = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DropdownMenu");
+
+  var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
     src: $props.src,
@@ -228,7 +248,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" fallback content here ")], 512
   /* NEED_PATCH */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
+    modelValue: $data.percent,
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.percent = $event;
+    }),
+    step: 0.1,
+    onOnChange: $options.changeTime
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "step", "onOnChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onClick: $options.togglePlayStop,
     "class": "mr-2",
@@ -239,7 +268,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["onClick", "icon"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onClick: _cache[0] || (_cache[0] = function ($event) {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.skip(-$data.step);
     }),
     "class": "mr-2",
@@ -248,35 +277,104 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onClick: _cache[1] || (_cache[1] = function ($event) {
+    onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.skip($data.step);
     }),
+    "class": "mr-2",
     size: "small",
     icon: "md-skip-forward",
     ghost: ""
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.current), 1
-  /* TEXT */
-  ), _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.duration), 1
-  /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
-    modelValue: $data.percent,
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.percent = $event;
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+    placement: "top"
+  }, {
+    list: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DropdownMenu, {
+        onOnClick: $options.setStep
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DropdownItem, {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('bg-gray-200'),
+            name: 15
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_6];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DropdownItem, {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('bg-gray-200'),
+            name: 10
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_7];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DropdownItem, {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('bg-gray-200'),
+            name: 5
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_8];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DropdownItem, {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('bg-gray-200'),
+            name: 3
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_9];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DropdownItem, {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('bg-gray-200'),
+            name: 1
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_10];
+            }),
+            _: 1
+            /* STABLE */
+
+          })];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["onOnClick"])];
     }),
-    step: 0.1,
-    onOnChange: $options.changeTime
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "step", "onOnChange"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        type: "text",
+        size: "small",
+        icon: "md-menu",
+        ghost: ""
+      })];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.current), 1
+  /* TEXT */
+  ), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.duration), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onClick: $options.toggleFullscreen,
-    "class": "mr-2",
     size: "small",
     icon: $data.isFullscreen ? 'md-contract' : 'md-expand',
     ghost: ""
   }, null, 8
   /* PROPS */
-  , ["onClick", "icon"])])])]);
+  , ["onClick", "icon"])])])])]);
 }
 
 /***/ }),
@@ -443,7 +541,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.player{\r\n  position: relative;\n}\n.controls {\r\n  /* visibility: hidden; */\r\n  position: absolute;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  width: 100%;\r\n  height: 3em;\r\n  background-color: rgba(43,51,63,.7);\r\n  display: flex;\n}\n.player:hover .controls,\r\n.player:focus-within .controls {\r\n  opacity: 1;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.player{\r\n  position: relative;\n}\n.controls {\r\n  /* visibility: hidden; */\r\n  position: absolute;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  width: 100%;\r\n  /* height: 3em; */\r\n  background-color: rgba(43,51,63,.4);\n}\n.player:hover .controls,\r\n.player:focus-within .controls {\r\n  opacity: 1;\n}\n.ivu-dropdown-menu {\r\n    min-width: 40px;\n}\n.ivu-dropdown-item{\r\n   text-align: center;\r\n   padding: 5px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
