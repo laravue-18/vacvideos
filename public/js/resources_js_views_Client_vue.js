@@ -104,7 +104,6 @@ var media = null;
 
       this.wind = setInterval(function () {
         var media = _this2.$refs.player;
-        media.pause();
         var step = flag ? _this2.step : -_this2.step;
         var destination = media.currentTime + step;
 
@@ -282,18 +281,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["onClick", "icon"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onClick: _cache[1] || (_cache[1] = function ($event) {
+    onMousedown: _cache[1] || (_cache[1] = function ($event) {
+      return $options.mediaWind(false);
+    }),
+    onMouseup: $options.cancelWind,
+    onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.skip(false);
     }),
     "class": "mr-2",
     size: "small",
     icon: "md-skip-backward",
     ghost: ""
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  }, null, 8
+  /* PROPS */
+  , ["onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onMousedown: $options.mediaWind,
+    onMousedown: _cache[3] || (_cache[3] = function ($event) {
+      return $options.mediaWind(true);
+    }),
     onMouseup: $options.cancelWind,
-    onClick: _cache[2] || (_cache[2] = function ($event) {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
       return $options.skip(true);
     }),
     "class": "mr-2",
@@ -302,7 +309,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }, null, 8
   /* PROPS */
-  , ["onMousedown", "onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  , ["onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     placement: "top",
     "events-enabled": true,
     onOnClick: $options.setStep,
@@ -378,7 +385,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["onOnClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onClick: _cache[3] || (_cache[3] = function ($event) {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.skip(true);
     }),
     "class": "mr-2",
@@ -387,7 +394,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
     modelValue: $data.volume,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.volume = $event;
     }),
     onOnChange: $options.changeVol
