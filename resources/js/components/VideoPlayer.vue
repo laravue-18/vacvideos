@@ -15,11 +15,11 @@
                 <Button type='text' size="small" icon="md-menu" ghost></Button>
                 <template #list>
                     <DropdownMenu>
-                        <DropdownItem :name="15">15</DropdownItem>
-                        <DropdownItem :name="10">10</DropdownItem>
-                        <DropdownItem :name="5">5</DropdownItem>
-                        <DropdownItem :name="3">3</DropdownItem>
-                        <DropdownItem :name="1">1</DropdownItem>
+                        <DropdownItem :name="15">15 sec</DropdownItem>
+                        <DropdownItem :name="10">10 sec</DropdownItem>
+                        <DropdownItem :name="5">5 sec</DropdownItem>
+                        <DropdownItem :name="3">3 sec</DropdownItem>
+                        <DropdownItem :name="1">1 sec</DropdownItem>
                     </DropdownMenu>
                 </template>
             </Dropdown>
