@@ -284,6 +284,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onMousedown: _cache[1] || (_cache[1] = function ($event) {
       return $options.mediaWind(false);
     }),
+    onMouseout: $options.cancelWind,
     onMouseup: $options.cancelWind,
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.skip(false);
@@ -294,11 +295,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }, null, 8
   /* PROPS */
-  , ["onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["onMouseout", "onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onMousedown: _cache[3] || (_cache[3] = function ($event) {
       return $options.mediaWind(true);
     }),
+    onMouseout: $options.cancelWind,
     onMouseup: $options.cancelWind,
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return $options.skip(true);
@@ -309,7 +311,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }, null, 8
   /* PROPS */
-  , ["onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  , ["onMouseout", "onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     placement: "top",
     "events-enabled": true,
     onOnClick: $options.setStep,
