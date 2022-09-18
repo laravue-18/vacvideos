@@ -10,7 +10,7 @@
           <div class='flex items-center'>
             <Button type='text' @click="togglePlayStop" class='mr-2' size="small" :icon=" isPlaying ? 'md-pause' : 'md-play'" ghost></Button>
             <Button type='text' @click="skip(false)" class='mr-2' size="small" icon="md-skip-backward"  ghost></Button>
-            <Button type='text' @click="skip(true)" class='mr-2' size="small" icon="md-skip-forward" ghost></Button>
+            <Button type='text' @mousedown='mediaWind' @mouseup='cancelWind' @click="skip(true)" class='mr-2' size="small" icon="md-skip-forward" ghost></Button>
             <Dropdown placement='top' :events-enabled="true" @on-click="setStep" class="mr-2">
                 <Button type='text' size="small" icon="md-menu" ghost></Button>
                 <template #list>
@@ -43,6 +43,8 @@
 </template>
   
 <script>
+  const media = null
+  
   export default {
     name: 'VideoPlayer',
     props: ['src'],
@@ -56,6 +58,7 @@
         current: '00:00',
         duration: '00:00',
         volume: 100,
+        wind: null
       }
     },
     mounted() {
@@ -128,6 +131,20 @@
       changeVol(){
         const media = this.$refs.player
         media.volume = this.volume / 100;
+      },
+      mediaWind(flag) {
+        this.wind = setInterval(() => {
+          const media = this.$refs.player;
+          media.pause()
+          const step = flag ? this.step : -this.step
+          const destination = media.currentTime + step
+          if( 0 < destination && destination < media.duration){
+            media.currentTime = destination;
+          }
+        }, 300)
+      },
+      cancelWind(){
+        clearInterval(this.wind)
       }
     },
     watch: {

@@ -11,6 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+var media = null;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'VideoPlayer',
   props: ['src'],
@@ -23,7 +24,8 @@ __webpack_require__.r(__webpack_exports__);
       percent: 0,
       current: '00:00',
       duration: '00:00',
-      volume: 100
+      volume: 100,
+      wind: null
     };
   },
   mounted: function mounted() {
@@ -96,6 +98,23 @@ __webpack_require__.r(__webpack_exports__);
     changeVol: function changeVol() {
       var media = this.$refs.player;
       media.volume = this.volume / 100;
+    },
+    mediaWind: function mediaWind(flag) {
+      var _this2 = this;
+
+      this.wind = setInterval(function () {
+        var media = _this2.$refs.player;
+        media.pause();
+        var step = flag ? _this2.step : -_this2.step;
+        var destination = media.currentTime + step;
+
+        if (0 < destination && destination < media.duration) {
+          media.currentTime = destination;
+        }
+      }, 300);
+    },
+    cancelWind: function cancelWind() {
+      clearInterval(this.wind);
     }
   },
   watch: {
@@ -272,6 +291,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
+    onMousedown: $options.mediaWind,
+    onMouseup: $options.cancelWind,
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.skip(true);
     }),
@@ -279,7 +300,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     size: "small",
     icon: "md-skip-forward",
     ghost: ""
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  }, null, 8
+  /* PROPS */
+  , ["onMousedown", "onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     placement: "top",
     "events-enabled": true,
     onOnClick: $options.setStep,
