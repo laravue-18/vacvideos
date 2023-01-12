@@ -76,9 +76,8 @@ export default {
   mounted(){
       axios.get(`/api/clients/${this.$route.params.id}`).then(res => {
         this.client = res.data
-        const videos = res.data.videos.map(i => '/media/' + i['Location'])
-        this.videos = videos
-        this.src = videos[0]
+        this.videos = res.data.videos
+        this.src = '/media/' + videos[0]['Location']
       })
     },
     updated(){
