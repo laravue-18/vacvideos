@@ -21,7 +21,7 @@ class ClientController extends Controller
             array_push($where,["Timestamp", '<', $dayAfter]);
         }
        
-        $clients = User::where($where)->with('pictures')->get();
+        $clients = User::where($where)->with(['pictures', 'videos'])->get();
 
         return response()->json($clients);
     }

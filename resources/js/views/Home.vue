@@ -21,14 +21,19 @@
             <div>
               <Avatar :src="'/media/' + (client.pictures.length ? client.pictures[0]['Picture_Location'].substring(11) : 'a.png')" size='120'/>
             </div>
-            <div class="pl-3 py-2">
-              <p class="text-lg font-bold">{{client.Client_Name}}</p>
-              <p class="">{{client.Script}}</p>
-              <p class="">{{client.Timestamp}}</p>
+            <div class="flex flex-col justify-between pl-3 py-2">
+              <div>
+                <p class="text-lg font-bold">{{client.Client_Name}}</p>
+                <p class="">{{client.Script}}</p>
+                <p class="">{{client.Timestamp}}</p>
+              </div>
+              <div>
+                <p>{{client.videos.length}} videos</p>
+              </div>
             </div>
           </div>
           <div class="border-t">
-            <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50">
+            <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50" :key="index">
               <div class="w-36">
                 <video-player  :options="{sources: item}"/>
               </div>
