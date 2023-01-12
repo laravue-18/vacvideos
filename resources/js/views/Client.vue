@@ -10,7 +10,7 @@
     </div>
     <div class="flex container m-auto pt-8">
       <div class="flex-1">
-        <div v-if="videos.length">
+        <div v-if="videos.length" class="border">
           <video-player  :src="src"/>
         </div>
         <div v-else class="flex justify-center items-center border bg-black" style="height: 500px;">
