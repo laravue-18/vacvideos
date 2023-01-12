@@ -32,12 +32,10 @@
           <div class="border-t">
             <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50" :key="index">
               <div class="w-36">
-                <video>
-                  <source :src="item" type="video/mp4">
-                </video>
+                <img :src="`/media/${item['Thumbnail']}`"/>
               </div>
               <div class="py-2 pl-4">
-                <p>Video {{index}}</p>
+                <p>Video {{index + 1}}</p>
                 <!-- <p>{{getName(item)}}</p> -->
                 <p>{{item['Timestamp']}}</p>
               </div>
