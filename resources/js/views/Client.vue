@@ -34,8 +34,8 @@
               <div class="w-36">
                 <img :src="item['Thumbnail'] ? `/media/${item['Thumbnail']}` : '/assets/img/thumb_video.jpg' "/>
               </div>
-              <div class="py-2 pl-4">
-                <p>Video {{index + 1}}</p>
+              <div class="flex flex-col justify-between py-2 pl-4">
+                <p class="font-semibold">Video {{index + 1}}</p>
                 <!-- <p>{{getName(item)}}</p> -->
                 <p>{{item['Timestamp']}}</p>
               </div>
