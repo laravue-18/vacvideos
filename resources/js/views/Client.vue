@@ -10,7 +10,7 @@
     </div>
     <div class="flex container m-auto pt-8">
       <div class="flex-1">
-        <div v-if="videos.length" class="border">
+        <div v-if="videos.length">
           <video-player  :src="src"/>
         </div>
         <div v-else class="flex justify-center items-center border bg-black" style="height: 500px;">
@@ -32,10 +32,12 @@
           <div class="border-t">
             <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50" :key="index">
               <div class="w-36">
-                <img :src="item['Thumbnail'] ? `/media/${item['Thumbnail']}` : '/assets/img/thumb_video.jpg' "/>
+                <video>
+                  <source :src="item" type="video/mp4">
+                </video>
               </div>
-              <div class="flex flex-col justify-between py-2 pl-4">
-                <p class="font-semibold">Video {{index + 1}}</p>
+              <div class="py-2 pl-4">
+                <p>Video {{index}}</p>
                 <!-- <p>{{getName(item)}}</p> -->
                 <p>{{item['Timestamp']}}</p>
               </div>
@@ -76,8 +78,9 @@ export default {
   mounted(){
       axios.get(`/api/clients/${this.$route.params.id}`).then(res => {
         this.client = res.data
-        this.videos = res.data.videos
-        this.src = '/media/' + videos[0]['Location']
+        const videos = res.data.videos.map(i => '/media/' + i['Location'])
+        this.videos = videos
+        this.src = videos[0]
       })
     },
     updated(){
