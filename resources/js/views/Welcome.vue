@@ -34,7 +34,7 @@
               <Card v-for="client in clients" class="bg-white" :key="client.id" @click="gotoClient({id:client.id, password: client['Password']})">
                 <div class="flex">
                   <img :src="`/media${client.pictures[0] ? client.pictures[0]['Picture_Location'].substring(10) : ''}`" class='w-24 h-24'/>
-                  <div class="flex flex-row justify-between ml-6">
+                  <div class="flex flex-col justify-between ml-6">
                     <div>
                       <p class="font-bold text-lg">{{client.Client_Name}}</p>
                       <p>{{ client.Script}}</p>
@@ -77,7 +77,7 @@
         title="Input Password"
         @on-ok="checkPassword"
         @on-cancel="cancel">
-        <Input type="password" v-model="password" placeholder='password'/>
+        <Input type="password" v-model="password" @on-enter="checkPassword" placeholder='password'/>
     </Modal>
     </div>
 </template>
