@@ -27,9 +27,9 @@
                 <p class="">{{client.Script}}</p>
                 <p class="">{{client.Timestamp}}</p>
               </div>
-              <div>
+              <!-- <div>
                 <p>{{client.videos.length}} videos</p>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="border-t">

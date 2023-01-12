@@ -16,7 +16,7 @@
               <FormItem label="Customer">
                 <Select style="width: 200px;" v-model="search.customer">
                   <Option value="all">All</Option>
-                  <Option v-for="i in customers" :value="i.ID">{{i.Customer_Name}}</Option>
+                  <Option v-for="i in customers" :value="i.ID" :key="i.ID">{{i.Customer_Name}}</Option>
                 </Select>
               </FormItem>
               <FormItem label="Name">
@@ -34,10 +34,15 @@
               <Card v-for="client in clients" class="bg-white" :key="client.id" @click="gotoClient({id:client.id, password: client['Password']})">
                 <div class="flex">
                   <img :src="`/media${client.pictures[0] ? client.pictures[0]['Picture_Location'].substring(10) : ''}`" class='w-24 h-24'/>
-                  <div class="ml-6">
-                    <p class="font-bold text-lg">{{client.Client_Name}}</p>
-                    <p>{{ client.Script}}</p>
-                    <p>{{ client.Timestamp}}</p>
+                  <div class="flex flex-row justify-between ml-6">
+                    <div>
+                      <p class="font-bold text-lg">{{client.Client_Name}}</p>
+                      <p>{{ client.Script}}</p>
+                      <p>{{ client.Timestamp}}</p>
+                    </div>
+                    <div>
+                      <p>{{ client.videos.length}} videos</p>
+                    </div>
                   </div>
                 </div>
               </Card>
