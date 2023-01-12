@@ -32,7 +32,7 @@
           <div class="border-t">
             <div v-for="(item, index) in videos" @click="playVideo(item)" class="border-b py-1 flex hover:bg-blue-50" :key="index">
               <div class="w-36">
-                <img :src="`/media/${item['Thumbnail']}`"/>
+                <img :src="item['Thumbnail'] ? `/media/${item['Thumbnail']}` : '/assets/img/thumb_video.jpg' "/>
               </div>
               <div class="py-2 pl-4">
                 <p>Video {{index + 1}}</p>
