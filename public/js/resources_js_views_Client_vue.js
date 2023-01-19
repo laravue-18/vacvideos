@@ -25,7 +25,8 @@ var media = null;
       current: '00:00',
       duration: '00:00',
       volume: 100,
-      wind: null
+      wind: null,
+      showingControl: false
     };
   },
   mounted: function mounted() {
@@ -114,6 +115,14 @@ var media = null;
     },
     cancelWind: function cancelWind() {
       clearInterval(this.wind);
+    },
+    showControl: function showControl() {
+      var _this3 = this;
+
+      this.showingControl = true;
+      setTimeout(function () {
+        _this3.showingControl = false;
+      }, 3000);
     }
   },
   watch: {
@@ -168,6 +177,7 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get("/api/clients/".concat(this.$route.params.id)).then(function (res) {
       _this.client = res.data;
+      _this.data = res.data.videos;
       var videos = res.data.videos.map(function (i) {
         return '/media/' + i['Location'];
       });
@@ -204,42 +214,34 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "player"
 };
-var _hoisted_2 = {
-  ref: "player",
-  "class": "w-full",
-  tabindex: "-1"
-};
-var _hoisted_3 = ["src"];
-var _hoisted_4 = {
-  "class": "controls p-2 pt-0"
-};
-var _hoisted_5 = {
+var _hoisted_2 = ["src"];
+var _hoisted_3 = {
   "class": "flex justify-between items-center"
 };
-var _hoisted_6 = {
+var _hoisted_4 = {
   "class": "flex items-center"
 };
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("15 sec");
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("15 sec");
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("10 sec");
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("10 sec");
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("5 sec");
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("5 sec");
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("3 sec");
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("3 sec");
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("1 sec");
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("1 sec");
 
-var _hoisted_12 = {
+var _hoisted_10 = {
   style: {
     "width": "100px"
   }
 };
-var _hoisted_13 = {
+var _hoisted_11 = {
   "class": "text-white"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " / ", -1
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " / ", -1
 /* HOISTED */
 );
 
@@ -254,23 +256,40 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", {
+    ref: "player",
+    "class": "w-full",
+    tabindex: "-1",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.togglePlayStop && $options.togglePlayStop.apply($options, arguments);
+    }),
+    onMousemove: _cache[1] || (_cache[1] = function () {
+      return $options.showControl && $options.showControl.apply($options, arguments);
+    }),
+    onMousedown: _cache[2] || (_cache[2] = function () {
+      return $options.showControl && $options.showControl.apply($options, arguments);
+    })
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
     src: $props.src,
     type: "video/mp4"
   }, null, 8
   /* PROPS */
-  , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" fallback content here ")], 512
-  /* NEED_PATCH */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
+  , _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" fallback content here ")], 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["controls p-2 pt-0", {
+      'hidden': !$data.showingControl
+    }])
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
     modelValue: $data.percent,
-    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.percent = $event;
     }),
     step: 0.1,
     onOnChange: $options.changeTime
   }, null, 8
   /* PROPS */
-  , ["modelValue", "step", "onOnChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["modelValue", "step", "onOnChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
     onClick: $options.togglePlayStop,
     "class": "mr-2",
@@ -281,12 +300,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["onClick", "icon"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onMousedown: _cache[1] || (_cache[1] = function ($event) {
+    onMousedown: _cache[4] || (_cache[4] = function ($event) {
       return $options.mediaWind(false);
     }),
     onMouseout: $options.cancelWind,
     onMouseup: $options.cancelWind,
-    onClick: _cache[2] || (_cache[2] = function ($event) {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.skip(false);
     }),
     "class": "mr-2",
@@ -297,12 +316,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["onMouseout", "onMouseup"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onMousedown: _cache[3] || (_cache[3] = function ($event) {
+    onMousedown: _cache[6] || (_cache[6] = function ($event) {
       return $options.mediaWind(true);
     }),
     onMouseout: $options.cancelWind,
     onMouseup: $options.cancelWind,
-    onClick: _cache[4] || (_cache[4] = function ($event) {
+    onClick: _cache[7] || (_cache[7] = function ($event) {
       return $options.skip(true);
     }),
     "class": "mr-2",
@@ -324,7 +343,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 15
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_7];
+              return [_hoisted_5];
             }),
             _: 1
             /* STABLE */
@@ -333,7 +352,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 10
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_8];
+              return [_hoisted_6];
             }),
             _: 1
             /* STABLE */
@@ -342,7 +361,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 5
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_9];
+              return [_hoisted_7];
             }),
             _: 1
             /* STABLE */
@@ -351,7 +370,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 3
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_10];
+              return [_hoisted_8];
             }),
             _: 1
             /* STABLE */
@@ -360,7 +379,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 1
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_11];
+              return [_hoisted_9];
             }),
             _: 1
             /* STABLE */
@@ -387,24 +406,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["onOnClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
-    onClick: _cache[5] || (_cache[5] = function ($event) {
+    onClick: _cache[8] || (_cache[8] = function ($event) {
       return $options.skip(true);
     }),
     "class": "mr-2",
     size: "small",
     icon: "md-volume-up",
     ghost: ""
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Slider, {
     modelValue: $data.volume,
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
       return $data.volume = $event;
     }),
     onOnChange: $options.changeVol
   }, null, 8
   /* PROPS */
-  , ["modelValue", "onOnChange"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.current), 1
+  , ["modelValue", "onOnChange"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.current), 1
   /* TEXT */
-  ), _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.duration), 1
+  ), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.duration), 1
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     type: "text",
@@ -414,7 +433,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ghost: ""
   }, null, 8
   /* PROPS */
-  , ["onClick", "icon"])])])])]);
+  , ["onClick", "icon"])])])], 2
+  /* CLASS */
+  )]);
 }
 
 /***/ }),
@@ -501,7 +522,10 @@ var _hoisted_19 = {
 };
 var _hoisted_20 = ["src"];
 var _hoisted_21 = {
-  "class": "py-2 pl-4"
+  "class": "flex flex-col justify-between py-2 pl-4"
+};
+var _hoisted_22 = {
+  "class": "font-semibold"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -541,14 +565,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       },
       "class": "border-b py-1 flex hover:bg-blue-50",
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
-      src: item,
-      type: "video/mp4"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+      src: _ctx.data[index]['Thumbnail'] ? "/media/".concat(_ctx.data[index]['Thumbnail']) : '/assets/img/thumb_video.jpg'
     }, null, 8
     /* PROPS */
-    , _hoisted_20)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Video " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index), 1
+    , _hoisted_20)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_22, "Video " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <p>{{getName(item)}}</p> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item['Timestamp']), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <p>{{getName(item)}}</p> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.data[index]['Timestamp']), 1
     /* TEXT */
     )])], 8
     /* PROPS */

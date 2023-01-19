@@ -1,10 +1,10 @@
 <template>
     <div class="player">
-      <video ref='player' class="w-full" tabindex="-1">
+      <video ref='player' class="w-full" tabindex="-1" @click="togglePlayStop" @mousemove="showControl" @mousedown="showControl">
         <source :src="src" type="video/mp4" />
         <!-- fallback content here -->
       </video>
-      <div class="controls p-2 pt-0">
+      <div class="controls p-2 pt-0" :class="{'hidden': !showingControl}">
         <Slider v-model="percent" :step="0.1" @on-change="changeTime"></Slider>
         <div class="flex justify-between items-center">
           <div class='flex items-center'>
@@ -58,7 +58,8 @@
         current: '00:00',
         duration: '00:00',
         volume: 100,
-        wind: null
+        wind: null,
+        showingControl: false
       }
     },
     mounted() {
@@ -144,6 +145,12 @@
       },
       cancelWind(){
         clearInterval(this.wind)
+      },
+      showControl(){
+        this.showingControl = true
+        setTimeout(() => {
+          this.showingControl = false
+        }, 3000)
       }
     },
     watch: {

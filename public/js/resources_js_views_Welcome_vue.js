@@ -452,10 +452,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return $data.password = $event;
         }),
+        onOnEnter: $options.checkPassword,
         placeholder: "password"
       }, null, 8
       /* PROPS */
-      , ["modelValue"])];
+      , ["modelValue", "onOnEnter"])];
     }),
     _: 1
     /* STABLE */
