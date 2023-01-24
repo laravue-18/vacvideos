@@ -11,7 +11,7 @@
     <div class="flex container m-auto pt-8">
       <div class="flex-1">
         <div v-if="videos.length">
-          <video-player  :src="src"/>
+          <video-player :src="src"/>
         </div>
         <div v-else class="flex justify-center items-center border bg-black" style="height: 500px;">
           <h5 class="text-gray-100 text-2xl font-bold">There is no video.</h5>
