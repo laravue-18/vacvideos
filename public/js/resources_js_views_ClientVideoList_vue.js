@@ -5929,10 +5929,10 @@ __webpack_require__.r(__webpack_exports__);
           }],
           poster: "/media/".concat(i['Thumbnail']),
           thumbnail: [{
-            srcset: "/media/".concat(i['Thumbnail']),
+            srcset: i['Thumbnail'] ? "/media/".concat(i['Thumbnail']) : '/assets/img/thumb_video.jpg',
             type: 'image/jpeg'
           }, {
-            src: '/assets/img/thumb_video.jpg'
+            src: i['Thumbnail'] ? "/media/".concat(i['Thumbnail']) : '/assets/img/thumb_video.jpg'
           }]
         };
       });

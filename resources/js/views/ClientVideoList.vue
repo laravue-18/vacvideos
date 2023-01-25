@@ -104,11 +104,11 @@ export default {
           poster: `/media/${i['Thumbnail']}`,
           thumbnail: [
             {
-              srcset: `/media/${i['Thumbnail']}`,
+              srcset: i['Thumbnail'] ? `/media/${i['Thumbnail']}` : '/assets/img/thumb_video.jpg',
               type: 'image/jpeg',
             },
             {
-              src: '/assets/img/thumb_video.jpg'
+              src: i['Thumbnail'] ? `/media/${i['Thumbnail']}` : '/assets/img/thumb_video.jpg'
             }
           ]
         }
