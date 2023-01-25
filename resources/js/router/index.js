@@ -27,7 +27,8 @@ const routes = [
   {
     path: '/clients/:id/',
     name: 'client',
-    component: () => import('../views/Client.vue')
+    component: () => import('../views/ClientVideoList.vue')
+    // component: () => import('../views/Client.vue')
   },
 ]
 

@@ -25,10 +25,6 @@ const app = createApp({});
 import App from './components/App.vue';
 app.component('app', App);
 
-import VueVideoPlayer from '@videojs-player/vue'
-// import VueVideoPlayer from 'vue-video-player'
-import 'video.js/dist/video-js.css'
-
 import locale from 'view-ui-plus/dist/locale/en-US';
 
 createApp(App)
@@ -37,7 +33,6 @@ createApp(App)
         .use(ViewUIPlus, {
                 locale
         })
-        .use(VueVideoPlayer)
         .mount("#app");
 
 
