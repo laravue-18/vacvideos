@@ -106,10 +106,9 @@ export default {
             {
               srcset: `/media/${i['Thumbnail']}`,
               type: 'image/jpeg',
-              media: '(min-width: 400px;)'
             },
             {
-              src: `/media/${i['Thumbnail']}`
+              src: '/assets/img/thumb_video.jpg'
             }
           ]
         }
@@ -136,6 +135,9 @@ export default {
 </script>
 
 <style>
+.vjs-playlist{
+  background: transparent;
+}
 button.vjs-control::before{
   font-size: 1.8em;
 }
