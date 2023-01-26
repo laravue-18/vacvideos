@@ -41,7 +41,7 @@
                       <p>{{ client.Timestamp}}</p>
                     </div>
                     <div>
-                      <p>{{ client.videos.length}} videos</p>
+                      <p>{{ client.videos.length ? client.videos.length : 'No'}} videos</p>
                     </div>
                   </div>
                 </div>
